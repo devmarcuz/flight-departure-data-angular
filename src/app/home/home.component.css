@@ -1,0 +1,84 @@
+main {
+  background: rgb(20, 20, 20);
+}
+main header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+}
+main header h1 {
+  color: rgb(53, 225, 255);
+  font-size: 25px;
+}
+main header .p {
+  color: rgb(53, 225, 255);
+  font-size: 16px;
+}
+main .container {
+  width: 100%;
+  padding: 0 30px;
+  margin-top: 20px;
+  margin-bottom: 40px;
+}
+main .container table {
+  border-collapse: collapse;
+  width: 100%;
+  color: white;
+}
+main .container table thead tr th {
+  background-color: rgb(33, 148, 168);
+  padding: 10px 5px;
+  text-align: center;
+  cursor: default;
+  color: rgb(235, 235, 235);
+}
+main .container table thead tr th:first-child {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  padding-left: 10px;
+}
+main .container table thead tr th:last-child {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  padding-right: 10px;
+}
+main .container table tbody {
+  color: rgb(173, 173, 173);
+  padding: 10px 5px;
+}
+main .container table tbody tr:nth-child(odd) {
+  background: rgb(27, 27, 27);
+}
+main .container table tbody tr td {
+  padding: 10px;
+  text-align: center;
+}
+main .container table tbody .status {
+  color: red;
+}
+
+@media (max-width: 767px) {
+  header {
+    display: block;
+    padding: 10px;
+  }
+  header h1 {
+    font-size: 20px;
+  }
+  header .p {
+    font-size: 11px;
+  }
+  .container {
+    padding: 0;
+  }
+  table {
+    font-size: 12px;
+  }
+  table thead tr th {
+    padding: 5px;
+  }
+  table tbody tr td {
+    padding: 5px;
+  }
+} /*# sourceMappingURL=Home.css.map */

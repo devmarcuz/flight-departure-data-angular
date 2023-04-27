@@ -1,0 +1,116 @@
+.container-login {
+  height: 100vh;
+  width: 100%;
+  background: rgb(6, 49, 56);
+  display: flex;
+  justify-content: center;
+  padding-top: 60px;
+  padding-bottom: 40px;
+}
+@media screen and (max-width: 500px) {
+  .container-login {
+    padding: 0;
+    display: block;
+  }
+}
+.container-login .form-container {
+  background: rgb(26, 26, 26);
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+  padding: 40px 60px;
+  transform: scale(0.9);
+}
+@media screen and (min-width: 501px) {
+  .container-login .form-container {
+    justify-content: space-between;
+  }
+}
+@media screen and (max-width: 500px) {
+  .container-login .form-container {
+    width: 115%;
+    height: 100%;
+    transform: scale(1);
+    padding: 20px 60px;
+  }
+}
+@media screen and (max-width: 380px) {
+  .container-login .form-container {
+    width: 120%;
+  }
+}
+.container-login .form-container .logo {
+  font-size: 35px;
+  text-align: center;
+  width: 100%;
+  letter-spacing: 10px;
+  padding-bottom: 40px;
+  color: rgb(53, 225, 255);
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+@media screen and (max-width: 500px) {
+  .container-login .form-container .logo {
+    padding-bottom: 25px;
+  }
+}
+.container-login .form-container .img {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 10px;
+}
+.container-login .form-container .img .loader-img {
+  width: 80px;
+  height: 80px;
+  -o-object-fit: contain;
+  object-fit: contain;
+  margin: 0;
+  padding: 0;
+}
+.container-login .form-container form {
+  display: flex;
+  flex-direction: column;
+}
+@media screen and (max-width: 500px) {
+  .container-login .form-container form {
+    padding-bottom: 20px;
+    padding-top: 20px;
+  }
+}
+.container-login .form-container form input {
+  border: 1px solid rgb(53, 225, 255);
+  background: transparent;
+  outline: none;
+  margin-bottom: 20px;
+  padding: 10px 15px;
+  border-radius: 10px;
+  color: rgb(136, 136, 136);
+}
+.container-login .form-container form button {
+  background: rgb(53, 225, 255);
+  padding: 10px 0;
+  border-radius: 5px;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-size: 16px;
+  border: none;
+}
+.container-login .form-container p {
+  color: rgb(136, 136, 136);
+  padding-top: 15px;
+  text-align: center;
+  text-transform: uppercase;
+}
+@media screen and (max-width: 500px) {
+  .container-login .form-container p {
+    padding-top: 10px;
+    font-size: 13px;
+  }
+}
+.container-login .form-container p span a {
+  color: var(--logo);
+  font-weight: bold;
+} /*# sourceMappingURL=Login.css.map */

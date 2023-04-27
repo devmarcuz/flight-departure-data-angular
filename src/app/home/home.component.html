@@ -1,0 +1,34 @@
+<main>
+  <header>
+    <h1>DEPARTURES</h1>
+    <div class="p">
+      {{ formattedDate }}
+      <p>{{ time }}</p>
+    </div>
+  </header>
+  <div class="container">
+    <table>
+      <thead>
+        <tr>
+          <th>Flight No.</th>
+          <th>From</th>
+          <th>Scheduled</th>
+          <th>Estimated</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let dt of data"
+          [ngClass]="{ status: dt.status === 'Cancelled' }"
+        >
+          <td data-label="ID">{{ dt.flight_no }}</td>
+          <td data-label="ID">{{ dt.from }}</td>
+          <td data-label="ID">{{ dt.scheduled }}</td>
+          <td data-label="ID">{{ dt.estimated }}</td>
+          <td data-label="ID">{{ dt.status }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</main>
