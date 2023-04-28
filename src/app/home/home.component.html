@@ -1,6 +1,6 @@
 <main>
   <header>
-    <h1>DEPARTURES</h1>
+    <h1>DASHBOARD</h1>
     <div class="p">
       {{ formattedDate }}
       <p>{{ time }}</p>
@@ -10,25 +10,31 @@
     <table>
       <thead>
         <tr>
-          <th>Flight No.</th>
-          <th>From</th>
-          <th>Scheduled</th>
-          <th>Estimated</th>
-          <th>Status</th>
+          <th>Airport</th>
+          <th>Time</th>
+          <th>Arriving</th>
+          <th>Departing</th>
         </tr>
       </thead>
-      <tbody>
-        <tr
-          *ngFor="let dt of data"
-          [ngClass]="{ status: dt.status === 'Cancelled' }"
-        >
-          <td data-label="ID">{{ dt.flight_no }}</td>
-          <td data-label="ID">{{ dt.from }}</td>
-          <td data-label="ID">{{ dt.scheduled }}</td>
-          <td data-label="ID">{{ dt.estimated }}</td>
-          <td data-label="ID">{{ dt.status }}</td>
+      <tbody *ngIf="!loading">
+        <tr *ngFor="let dt of flights; let i = index">
+          <td data-label="ID">
+            {{ dt.airport }}
+          </td>
+          <td data-label="ID">
+            {{ dt.time }}
+          </td>
+          <td data-label="ID">
+            {{ dt.arriving }}
+          </td>
+          <td data-label="ID">
+            {{ dt.departing }}
+          </td>
         </tr>
       </tbody>
     </table>
+    <div *ngIf="!loading">
+      <app-loading></app-loading>
+    </div>
   </div>
 </main>

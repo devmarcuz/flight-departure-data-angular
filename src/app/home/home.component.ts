@@ -1,5 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import axios from 'axios';
+
+interface Flight {
+  id: string;
+  arriving: string;
+  time: string;
+  airport: string;
+  departing: string;
+}
+
+const airportAbbreviations: { [key: string]: string } = {
+  Brisbane: 'BNE',
+  Melbourne: 'MEL',
+  Sydney: 'SYD',
+  Ballina: 'BNK',
+};
 
 @Component({
   selector: 'app-home',
@@ -7,66 +23,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
-  data = [
-    {
-      flight_no: 'QF 2425',
-      from: 'Brisbane',
-      scheduled: '3:30pm',
-      estimated: '3:30pm',
-      status: 'Landed',
-    },
-    {
-      flight_no: 'JQ 478',
-      from: 'Melbourne',
-      scheduled: '3:35pm',
-      estimated: '3:35pm',
-      status: 'Cancelled',
-    },
-    {
-      flight_no: 'ZL 439',
-      from: 'Ballina',
-      scheduled: '5:40pm',
-      estimated: '4:40pm',
-      status: 'On-time',
-    },
-    {
-      flight_no: 'QF 2425',
-      from: 'Brisbane',
-      scheduled: '5:45pm',
-      estimated: '5:40pm',
-      status: 'Delayed',
-    },
-    {
-      flight_no: 'QF 2425',
-      from: 'Sydney',
-      scheduled: '6:00pm',
-      estimated: '6:00pm',
-      status: 'On-time',
-    },
-    {
-      flight_no: 'JQ 478',
-      from: 'Melbourne',
-      scheduled: '6:30pm',
-      estimated: '6:30pm',
-      status: 'Cancelled',
-    },
-    {
-      flight_no: 'ZL 439',
-      from: 'Ballina',
-      scheduled: '7:05pm',
-      estimated: '7:05pm',
-      status: 'On-time',
-    },
-    {
-      flight_no: 'QF 2425',
-      from: 'Brisbane',
-      scheduled: '7:45pm',
-      estimated: '7:35pm',
-      status: 'On-time',
-    },
-  ];
-
   isLogin = true;
+  flights: Flight[] = [];
+  loading = true;
   formattedDate!: string;
   time!: string;
 
@@ -74,6 +33,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.checkLogin();
+    this.fetchFlights();
     this.setDateTime();
   }
 
@@ -83,13 +43,44 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  setDateTime() {
-    const timeOptions = {
-      hour: 'numeric',
-      minute: 'numeric',
-      hour12: true,
-    };
+  fetchFlights() {
+    if (this.flights.length < 1) {
+      axios
+        .get('https://opensky-network.org/api/states/all')
+        .then((response) => {
+          const data = response.data.states;
+          const flights: Flight[] = data.map((state: any) => {
+            const arrivalAirport = state[2];
+            const departureAirport = state[3];
+            const time = new Date(state[4] * 1000).toLocaleTimeString([], {
+              hour: '2-digit',
+              minute: '2-digit',
+              hour12: true,
+              timeZone: 'America/Chicago',
+            });
+            const id = state[0];
+            const arriving =
+              airportAbbreviations[arrivalAirport] || arrivalAirport;
+            const departing =
+              airportAbbreviations[departureAirport] || departureAirport;
 
+            return {
+              id: id,
+              arriving: arriving,
+              time: time,
+              airport: `${arriving} `,
+              departing: departing,
+            };
+          });
+
+          this.flights = flights;
+          this.loading = false;
+        })
+        .catch((error) => console.error(error));
+    }
+  }
+
+  setDateTime() {
     const locale = navigator.language;
     const date = new Date();
     const day = date.toLocaleDateString(locale, { weekday: 'long' });
@@ -97,6 +88,7 @@ export class HomeComponent implements OnInit {
     const dayOfMonth = date.getDate();
 
     this.formattedDate = `${day} ${dayOfMonth} ${month}`;
+
     let hour = date.getHours();
     let minute = date.getMinutes();
     const ampm = hour >= 12 ? ' PM' : ' AM';

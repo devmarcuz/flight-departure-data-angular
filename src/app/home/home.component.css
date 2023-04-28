@@ -25,6 +25,7 @@ main .container table {
   border-collapse: collapse;
   width: 100%;
   color: white;
+  position: relative;
 }
 main .container table thead tr th {
   background-color: rgb(33, 148, 168);
