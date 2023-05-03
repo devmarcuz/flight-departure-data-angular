@@ -25,7 +25,6 @@ export class RegisterComponent implements OnInit {
   ) {}
 
   addInfoToast(error: any) {
-    console.log(error);
     this._toastService.info(error);
   }
 
