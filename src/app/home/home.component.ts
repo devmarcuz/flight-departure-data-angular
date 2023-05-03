@@ -1,14 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import axios from 'axios';
-
-interface Flight {
-  id: string;
-  arriving: string;
-  time: string;
-  airport: string;
-  departing: string;
-}
+import { faPlaneUp, faPowerOff } from '@fortawesome/free-solid-svg-icons';
+import { Flight } from '../Flight';
+import { FlightService } from '../services/flight.service';
 
 const airportAbbreviations: { [key: string]: string } = {
   Brisbane: 'BNE',
@@ -23,62 +17,94 @@ const airportAbbreviations: { [key: string]: string } = {
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
-  isLogin = true;
   flights: Flight[] = [];
   loading = true;
   formattedDate!: string;
   time!: string;
+  currentPage: number = 1;
+  postsPerPage: number = 8;
+  indexOfLastPost = this.currentPage * this.postsPerPage;
+  indexOfFirstPost = this.indexOfLastPost - this.postsPerPage;
+  currentPosts: Flight[] = [];
+  faPlaneUp = faPlaneUp;
+  faPowerOff = faPowerOff;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private flightApi: FlightService) {}
 
   ngOnInit(): void {
-    this.checkLogin();
+    this.checkIfLogin();
     this.fetchFlights();
     this.setDateTime();
-  }
-
-  checkLogin() {
-    if (!this.isLogin) {
-      this.router.navigate(['/login']);
+    if (this.flights.length > 1) {
+      this.setCurrentPosts();
     }
   }
+
+  checkIfLogin() {
+    if (!localStorage.getItem('flight-departure-user-angular')) {
+      this.router.navigate(['login']);
+    }
+  }
+
+  assign() {
+    this.indexOfLastPost = this.currentPage * this.postsPerPage;
+    this.indexOfFirstPost = this.indexOfLastPost - this.postsPerPage;
+    this.setCurrentPosts();
+  }
+
+  setCurrentPosts() {
+    this.currentPosts = [
+      ...this.flights.slice(this.indexOfFirstPost, this.indexOfLastPost),
+    ];
+  }
+
+  paginate = (number: number) => {
+    this.assign();
+    this.currentPage = number;
+  };
 
   fetchFlights() {
     if (this.flights.length < 1) {
-      axios
-        .get('https://opensky-network.org/api/states/all')
-        .then((response) => {
-          const data = response.data.states;
-          const flights: Flight[] = data.map((state: any) => {
-            const arrivalAirport = state[2];
-            const departureAirport = state[3];
-            const time = new Date(state[4] * 1000).toLocaleTimeString([], {
-              hour: '2-digit',
-              minute: '2-digit',
-              hour12: true,
-              timeZone: 'America/Chicago',
-            });
-            const id = state[0];
-            const arriving =
-              airportAbbreviations[arrivalAirport] || arrivalAirport;
-            const departing =
-              airportAbbreviations[departureAirport] || departureAirport;
-
-            return {
-              id: id,
-              arriving: arriving,
-              time: time,
-              airport: `${arriving} `,
-              departing: departing,
-            };
+      this.flightApi.fetchFlights().subscribe((response) => {
+        const data = response.states;
+        const flights: Flight[] = data.map((state: any) => {
+          const arrivalAirport = state[2];
+          const departureAirport = state[3];
+          const time = new Date(state[4] * 1000).toLocaleTimeString([], {
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: true,
+            timeZone: 'America/Chicago',
           });
+          const id = state[0];
+          const arriving =
+            airportAbbreviations[arrivalAirport] || arrivalAirport;
+          const departing =
+            airportAbbreviations[departureAirport] || departureAirport;
 
-          this.flights = flights;
-          this.loading = false;
-        })
-        .catch((error) => console.error(error));
+          return {
+            id: id,
+            arriving: arriving,
+            time: time,
+            airport: `${arriving} `,
+            departing: departing,
+          };
+        });
+
+        this.flights = flights;
+        this.loading = false;
+        this.totalPosts = this.flights.length;
+        this.setCurrentPosts();
+      });
     }
   }
+
+  totalPosts: number = this.flights.length;
+
+  logout = () => {
+    localStorage.clear();
+    this.router.navigate(['login']);
+  };
 
   setDateTime() {
     const locale = navigator.language;
@@ -87,14 +113,12 @@ export class HomeComponent implements OnInit {
     const month = date.toLocaleDateString(locale, { month: 'long' });
     const dayOfMonth = date.getDate();
 
-    this.formattedDate = `${day} ${dayOfMonth} ${month}`;
+    this.time = new Date().toLocaleTimeString(navigator.language, {
+      hour: 'numeric',
+      minute: 'numeric',
+      hour12: true,
+    });
 
-    let hour = date.getHours();
-    let minute = date.getMinutes();
-    const ampm = hour >= 12 ? ' PM' : ' AM';
-    hour = hour % 12;
-    hour = hour ? hour : 12;
-    minute = minute < 10 ? 0 + minute : minute;
-    this.time = hour + ':' + minute + ampm;
+    this.formattedDate = `${day} ${dayOfMonth} ${month}`;
   }
 }

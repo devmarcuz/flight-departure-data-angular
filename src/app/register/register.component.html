@@ -6,6 +6,13 @@
     </div>
     <form>
       <input
+        type="text"
+        placeholder="Username"
+        name="username"
+        [(ngModel)]="username"
+        (ngModelChange)="onChange()"
+      />
+      <input
         type="email"
         placeholder="Email"
         name="email"
@@ -19,14 +26,21 @@
         [(ngModel)]="password"
         (ngModelChange)="onChange()"
       />
-      <button type="submit" (click)="onSubmit()" class="submit-btn">
-        Log In
+      <input
+        type="password"
+        placeholder="Confirm Password"
+        name="confirmPassword"
+        [(ngModel)]="confirmPassword"
+        (ngModelChange)="onChange()"
+      />
+      <button type="submit" (click)="onClick()" class="submit-btn">
+        Register
       </button>
     </form>
     <p>
-      Don't have an account?
+      Already have an account?
       <span>
-        <a routerLink="/register">Sign Up</a>
+        <a routerLink="/login">Log In</a>
       </span>
     </p>
   </div>

@@ -1,0 +1,26 @@
+<div *ngIf="!loading" class="pagination">
+  <div class="actions">
+    <fa-icon
+      [icon]="faChevronLeft"
+      class="btn"
+      (click)="handlePrevBtn()"
+    ></fa-icon>
+    <ul>
+      <ng-container *ngFor="let page of pageNumbers">
+        <li
+          *ngIf="page < maxPageNumberLimit + 1 && page > minPageNumberLimit"
+          [class.color-active]="currentPage === page"
+          (click)="pageNumber = page; paginate.emit(page)"
+        >
+          {{ page }}
+        </li>
+      </ng-container>
+    </ul>
+    <fa-icon
+      [icon]="faChevronRight"
+      class="btn"
+      (click)="handleNextBtn()"
+    ></fa-icon>
+  </div>
+  <div class="background"></div>
+</div>

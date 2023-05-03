@@ -41,7 +41,7 @@ main header .end .logout {
   cursor: pointer;
   outline: none;
 }
-main header .end .logout .svg {
+main header .end .logout svg {
   color: white;
   margin: 10px;
   font-size: 20px;
@@ -52,41 +52,41 @@ main .container {
   margin-top: 20px;
   margin-bottom: 40px;
 }
-main .container table {
+table {
   border-collapse: collapse;
   width: 100%;
   color: white;
   position: relative;
 }
-main .container table thead tr th {
+table thead tr th {
   background-color: rgb(33, 148, 168);
   padding: 10px 5px;
   text-align: center;
   cursor: default;
   color: rgb(235, 235, 235);
 }
-main .container table thead tr th:first-child {
+table thead tr th:first-child {
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
   padding-left: 10px;
 }
-main .container table thead tr th:last-child {
+table thead tr th:last-child {
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
   padding-right: 10px;
 }
-main .container table tbody {
+table tbody {
   color: rgb(173, 173, 173);
   padding: 10px 5px;
 }
-main .container table tbody tr:nth-child(odd) {
+table tbody tr:nth-child(odd) {
   background: rgb(27, 27, 27);
 }
-main .container table tbody tr td {
+table tbody tr td {
   padding: 10px;
   text-align: center;
 }
-main .container table tbody .status {
+table tbody .status {
   color: red;
 }
 

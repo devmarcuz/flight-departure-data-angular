@@ -1,20 +1,22 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
 import { ToastService } from 'angular-toastify';
 import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css'],
+  selector: 'app-register',
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.css'],
 })
-export class LoginComponent implements OnInit {
+export class RegisterComponent implements OnInit {
+  username!: string;
   email!: string;
   password!: string;
-  loading: boolean = false;
+  confirmPassword!: string;
   error!: string;
+  loading: boolean = false;
 
   constructor(
     private auth: AuthService,
@@ -23,6 +25,7 @@ export class LoginComponent implements OnInit {
   ) {}
 
   addInfoToast(error: any) {
+    console.log(error);
     this._toastService.info(error);
   }
 
@@ -45,26 +48,41 @@ export class LoginComponent implements OnInit {
     this.loading = false;
   }
 
-  onSubmit() {
+  onClick() {
     const data = {
+      username: this.username,
       email: this.email,
       password: this.password,
+      confirmPassword: this.confirmPassword,
     };
 
-    if (!this.email && !this.password) {
+    if (
+      !this.username &&
+      !this.email &&
+      !this.confirmPassword &&
+      !this.password
+    ) {
       this.error = 'All fields required';
+      this.addInfoToast(this.error);
+    } else if (this.username.length < 3) {
+      this.error = 'Username length too short';
+      this.addInfoToast(this.error);
+    } else if (this.password.length < 8) {
+      this.error = 'Password length too short';
       this.addInfoToast(this.error);
     } else if (!this.validateEmail(this.email)) {
       this.error = 'Enter a valid email';
+      this.addInfoToast(this.error);
+    } else if (this.password !== this.confirmPassword) {
+      this.error = "Password doesn't match";
       this.addInfoToast(this.error);
     } else {
       this.loading = true;
 
       this.auth
-        .loginUser(data)
+        .registerUser(data)
         .pipe(
           catchError((err) => {
-            console.log(err);
             if (err.statusText === 'Unknown Error') {
               this.error = 'Check your internet connnection';
               return of(err);
@@ -84,8 +102,6 @@ export class LoginComponent implements OnInit {
               JSON.stringify(res.user)
             );
             this.router.navigate(['home']);
-          } else {
-            this.addInfoToast(res.msg);
           }
         });
     }

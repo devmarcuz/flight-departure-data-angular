@@ -1,0 +1,27 @@
+<table>
+  <thead>
+    <tr>
+      <th>Airport</th>
+      <th>Time</th>
+      <th>Arriving</th>
+      <th>Departing</th>
+    </tr>
+  </thead>
+  <app-loading [loading]="loading"></app-loading>
+  <tbody *ngIf="!loading">
+    <tr *ngFor="let dt of currentPosts; let i = index">
+      <td data-label="ID">
+        {{ dt.airport }}
+      </td>
+      <td data-label="ID">
+        {{ dt.time }}
+      </td>
+      <td data-label="ID">
+        {{ dt.arriving }}
+      </td>
+      <td data-label="ID">
+        {{ dt.departing }}
+      </td>
+    </tr>
+  </tbody>
+</table>

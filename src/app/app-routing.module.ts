@@ -1,12 +1,11 @@
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
-import { MovieComponent } from './movie/movie.component';
+import { RegisterComponent } from './register/register.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
   {
     path: 'login',
     component: LoginComponent,
@@ -16,17 +15,17 @@ const routes: Routes = [
     component: HomeComponent,
   },
   {
-    path: 'movie',
-    component: MovieComponent,
+    path: 'register',
+    component: RegisterComponent,
   },
   {
     path: '**',
-    component: LoginComponent,
+    component: HomeComponent,
   },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes), FormsModule],
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

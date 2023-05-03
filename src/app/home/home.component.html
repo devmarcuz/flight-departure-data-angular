@@ -1,40 +1,66 @@
 <main>
   <header>
     <h1>DASHBOARD</h1>
-    <div class="p">
-      {{ formattedDate }}
-      <p>{{ time }}</p>
+    <div class="welcome">
+      <fa-icon [icon]="faPlaneUp"></fa-icon>
+      <p>Check-in</p>
+    </div>
+    <div class="end">
+      <div class="p">
+        {{ formattedDate }}
+        <p>{{ time }}</p>
+      </div>
+      <button class="logout" (click)="logout()">
+        <fa-icon [icon]="faPowerOff" class="svg"></fa-icon>
+      </button>
     </div>
   </header>
   <div class="container">
-    <table>
-      <thead>
-        <tr>
-          <th>Airport</th>
-          <th>Time</th>
-          <th>Arriving</th>
-          <th>Departing</th>
-        </tr>
-      </thead>
-      <tbody *ngIf="!loading">
-        <tr *ngFor="let dt of flights; let i = index">
-          <td data-label="ID">
-            {{ dt.airport }}
-          </td>
-          <td data-label="ID">
-            {{ dt.time }}
-          </td>
-          <td data-label="ID">
-            {{ dt.arriving }}
-          </td>
-          <td data-label="ID">
-            {{ dt.departing }}
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <div *ngIf="!loading">
+    <app-table
+      [flights]="flights"
+      [currentPosts]="currentPosts"
+      [loading]="loading"
+    ></app-table>
+    <!-- <div *ngIf="!loading">
       <app-loading></app-loading>
-    </div>
+    </div> -->
   </div>
+
+  <app-pagination
+    [currentPage]="currentPage"
+    [postsPerPage]="postsPerPage"
+    [totalPosts]="totalPosts"
+    (paginate)="paginate($event)"
+    [loading]="loading"
+  ></app-pagination>
 </main>
+
+<!-- <main>
+  <header>
+    <h1>DASHBOARD</h1>
+    <div className="welcome">
+      <ImAirplane />
+      <p>Check-in</p>
+    </div>
+    <div className="end">
+      <div className="p">
+        {formattedDate}
+        <p>{time}</p>
+      </div>
+      <button className="logout" onClick="{logout}">
+        <BiPowerOff />
+      </button>
+    </div>
+  </header>
+  <div className="container">
+    <Table loading={loading} currentPosts={currentPosts} />
+  </div>
+  {data.length > 1 && (
+        <Pagination
+          postsPerPage={postsPerPage}
+          totalUsers={data.length}
+          paginate={paginate}
+          currentPage={currentPage}
+        />
+      )}
+</main> -->
