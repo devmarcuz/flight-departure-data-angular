@@ -27,6 +27,7 @@ export class PaginationComponent implements OnInit {
   constructor(private flightApi: FlightService) {}
 
   ngOnInit(): void {
+    this.loop();
     this.flightApi.fetchFlights().subscribe(() => {
       this.loop();
     });
