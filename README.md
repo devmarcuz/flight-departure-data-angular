@@ -6,6 +6,15 @@ This is a sample project built with Angular that displays the departure informat
 
 A live demo of this application is available at [https://flight-departure-data-angular.vercel.app/login](https://flight-departure-data-angular.vercel.app/login)
 
+## Accessibility
+
+To access the deployed application without registration, please use the following credentials:
+
+```environment
+Email: newuser@gmail.com
+Password: password123
+```
+
 ## Features
 
 - Displays real-time departure data of several airports
