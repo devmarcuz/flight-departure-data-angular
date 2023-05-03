@@ -102,6 +102,8 @@ export class RegisterComponent implements OnInit {
               JSON.stringify(res.user)
             );
             this.router.navigate(['home']);
+          } else {
+            this.addInfoToast(res.msg);
           }
         });
     }
