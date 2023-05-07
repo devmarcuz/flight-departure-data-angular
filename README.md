@@ -6,9 +6,25 @@ This is a sample project built with Angular that displays the departure informat
 
 A live demo of this application is available at [https://flight-departure-data-angular.vercel.app](https://flight-departure-data-angular.vercel.app)
 
-## Accessibility
+To access the deployed application, use the following credentials:
 
-To access the deployed application without registration, please use the following credentials:
+```environment
+Email: newuser@gmail.com
+Password: password123
+```
+
+## Instructions
+
+Instructions for signing up and accessing the deployed app:
+
+- Go to the following link: [https://flight-departure-data-angular.vercel.app/login](https://flight-departure-data-angular.vercel.app/login)
+- Click on the "Sign Up".
+- Enter your details in the sign-up form and click on the "Sign Up" button.
+- You will be redirected to the home page.
+- The flight departures will be displayed on the page.
+- You can click on the "Log Out" button on the navigation bar to log out of the app.
+
+Note: You can also use the following login credentials to access the app without signing up:
 
 ```environment
 Email: newuser@gmail.com
