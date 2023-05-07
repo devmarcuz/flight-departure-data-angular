@@ -4,7 +4,7 @@ This is a sample project built with Angular that displays the departure informat
 
 ## Demo Page
 
-A live demo of this application is available at [https://flight-departure-data-angular.vercel.app/login](https://flight-departure-data-angular.vercel.app/login)
+A live demo of this application is available at [https://flight-departure-data-angular.vercel.app](https://flight-departure-data-angular.vercel.app)
 
 ## Accessibility
 
