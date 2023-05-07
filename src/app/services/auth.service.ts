@@ -12,7 +12,8 @@ const httpOptions = {
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'https://flight-departure-auth-api.onrender.com/api/auth';
+  private apiUrl = 'http://localhost:5000/api/auth';
+  // private apiUrl = 'https://flight-departure-auth-api.onrender.com/api/auth';
 
   constructor(private http: HttpClient) {}
 
@@ -22,5 +23,9 @@ export class AuthService {
 
   registerUser(data: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/add-user`, data, httpOptions);
+  }
+
+  loadApiUsers(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}`);
   }
 }
