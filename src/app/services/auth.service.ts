@@ -12,8 +12,8 @@ const httpOptions = {
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:5000/api/auth';
-  // private apiUrl = 'https://flight-departure-auth-api.onrender.com/api/auth';
+  // private apiUrl = 'http://localhost:5000/api/auth';
+  private apiUrl = 'https://flight-departure-auth-api.onrender.com/api/auth';
 
   constructor(private http: HttpClient) {}
 
